@@ -1,0 +1,18 @@
+.task-creator {
+    display: flex;
+    flex-direction: column;
+}
+
+#task-container {
+    display: flex;
+}
+
+.task {
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 5rem;
+    height: 5rem;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
