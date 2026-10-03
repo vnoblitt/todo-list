@@ -1,4 +1,6 @@
 import "./styles.css";
+import circlePlusIcon from "./icons/circle-plus.svg";
+import listIcon from "./icons/list.svg";
 import { createTask } from "./createTask.js";
 import { listTasks, viewTask } from "./taskList.js";
 
@@ -9,6 +11,47 @@ const taskContainer = document.createElement("div");
 taskContainer.id = "task-container";
 content.append(taskContainer);
 
+// SIDEBAR WIP ----------------------------------------
+const sidebar = document.getElementById("sidebar");
+
+const addTaskView = document.createElement("div");
+addTaskView.classList.add("sidebar-element");
+const addTaskIcon = document.createElement("img");
+addTaskIcon.classList.add("sidebar-icon");
+addTaskIcon.src = circlePlusIcon;
+addTaskIcon.active = true;
+addTaskIcon.addEventListener("click", async () => {
+    if(addTaskIcon.active) {
+        addTaskIcon.active = false;
+        const task = await createTask();
+        localStorage.setItem(`${task.id}`, JSON.stringify(task));
+        populateTasks.click();
+        addTaskIcon.active = true;
+    }
+})
+const addTaskText = document.createElement("div");
+addTaskText.classList.add("sidebar-text");
+addTaskText.textContent = "Add Task";
+
+addTaskView.append(addTaskIcon, addTaskText);
+
+const taskListView = document.createElement("div");
+taskListView.classList.add("sidebar-element");
+const taskListIcon = document.createElement("img");
+taskListIcon.classList.add("sidebar-icon");
+taskListIcon.src = listIcon;
+taskListIcon.textContent = "TEST"
+taskListIcon.addEventListener("click", () => {
+    console.log("task list requested");
+});
+const taskListText = document.createElement("div");
+taskListText.classList.add("sidebar-text");
+taskListText.textContent = "Task List";
+
+taskListView.append(taskListIcon, taskListText);
+
+sidebar.append(addTaskView, taskListView);
+// SIDEBAR -----------------------------------------------
 const tasksList = listTasks();
 
 for (const task of tasksList) {

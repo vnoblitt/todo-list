@@ -1,3 +1,39 @@
+body {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+
+#sidebar {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 0;
+}
+
+#content {
+    padding: 10px;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.sidebar-icon {
+    padding: 5px;
+}
+
+.sidebar-icon:hover {
+    cursor: pointer;
+}
+
 .task-creator {
     display: flex;
     flex-direction: column;
