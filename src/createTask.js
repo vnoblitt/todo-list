@@ -80,10 +80,11 @@ function submitTask(container) {
     const taskPriority = ""//priority.value;
     const taskNotes = ""//notes.value;
     const taskChecklist = ""//checklist.value;
+    const taskComplete = false;
 
     const uniqueID = crypto.randomUUID();
 
-    const createdTask = new Task(taskTitle, taskDueDate, taskPriority, taskNotes, taskChecklist, uniqueID);
+    const createdTask = new Task(taskTitle, taskDueDate, taskPriority, taskNotes, taskChecklist, uniqueID, taskComplete);
     return createdTask;
 }
 

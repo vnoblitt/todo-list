@@ -1,5 +1,5 @@
 import "./styles.css";
-import { populateTasks, removeTask, listTasks, viewTask } from "./taskView.js";
+import { populateTasks, removeTask, listTasks, viewTask, taskContainer } from "./taskView.js";
 import { sidebar } from "./sidebar.js";
 
 /* THIS MAY BE SCRAP IDK YET
@@ -46,12 +46,39 @@ taskContainer.addEventListener("click", (event) => {
 function switchView(view) {
     switch (view) {
         case "taskList":
-            console.log(listTasks());
+            let list = listTasks();
             populateTasks();
+            taskContainer.addEventListener("click", (event) => {
+                if (event.target.closest(".task-bubble")) {
+                    const bubble = event.target.closest(".task-bubble");
+                    if (!bubble) return;
+                    const task = list.find(task => task.id === bubble.id);
+                    if(task.complete === false) {
+                        task.markComplete();
+                        event.target.style.fill = "black";
+                        bubble.classList.add("complete")
+                        bubble.classList.remove("incomplete");
+                    } else {
+                        task.markIncomplete();
+                        event.target.style.fill = "none";
+                        bubble.classList.add("incomplete")
+                        bubble.classList.remove("complete");
+                    }   
+                    localStorage.setItem(task.id, JSON.stringify(task));
+                } else if (event.target.closest(".task-delete")) {
+                    console.log("hit")
+                    const trash = event.target.closest(".task-delete");
+                    if (!trash) return;
+                    const task = list.find(task => task.id === trash.id);
+                    //removeTask(task.id);
+                }
+            });
             break;
     }
 }
 
-export { switchView }
+//document.addEventListener("click", )
 
-console.log(listTasks())
+switchView("taskList");
+
+export { switchView }
