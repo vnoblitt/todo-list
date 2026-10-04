@@ -13,6 +13,7 @@ body {
 
 #content {
     padding: 10px;
+    flex: 1;
 }
 
 #buttons {
@@ -36,19 +37,39 @@ body {
 
 .task-creator {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #task-container {
     display: flex;
+    flex-direction: column;
 }
 
 .task {
+    display: flex;
     border: 2px solid black;
     border-radius: 8px;
-    width: 5rem;
-    height: 5rem;
+    width: 300px;
+    height: 30px;
+    align-items: center;
+    gap: 5px;
+}
+
+#form {
+    width: 100%;
+    display: flex;
     justify-content: center;
-    align-content: center;
-    text-align: center;
+    align-items: center;
+}
+
+#title {
+    width: 300px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 2px solid black;
+}
+
+#submit-task:hover {
+    cursor: pointer;
 }
