@@ -22,6 +22,7 @@ function populateTasks() {
         if (document.getElementById(task.id) === null) {
             
             const taskDiv = document.createElement("div");
+            taskDiv.id = task.id;
             const taskP = document.createElement("p");
             taskP.classList.add("task-p");
             taskP.id = task.id;
@@ -55,13 +56,8 @@ function populateTasks() {
 function removeTask(id) {
     console.log(`${id} removed`);
     localStorage.removeItem(id);
-    taskContainer.innerHTML = "";
-    taskViewer.innerHTML = "";
-    populateTasks.click();
-    const task = taskContainer.querySelector(".task");
-    if (task) {
-        task.click();
-    }
+    const task = document.getElementById(id);
+    task.remove();
 }
 function getTasks() {
     const tasks = Object.keys(localStorage).map((key) => {

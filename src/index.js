@@ -70,7 +70,7 @@ function switchView(view) {
                     const trash = event.target.closest(".task-delete");
                     if (!trash) return;
                     const task = list.find(task => task.id === trash.id);
-                    //removeTask(task.id);
+                    removeTask(task.id);
                 }
             });
             break;
@@ -80,5 +80,9 @@ function switchView(view) {
 //document.addEventListener("click", )
 
 switchView("taskList");
-
+console.log(listTasks());
+const id = "198398dd-ac43-425c-a167-69bd0fb54076"
+const tasksList = listTasks();
+const targetTask = tasksList.find(task => task.id === id);
+console.log(targetTask)
 export { switchView }
