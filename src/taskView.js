@@ -25,12 +25,12 @@ function populateTasks() {
             taskDiv.id = task.id;
             const taskP = document.createElement("p");
             taskP.classList.add("task-p");
-            taskP.id = task.id;
+            taskP.dataset.id = task.id;
             taskP.textContent = task.title;
             const taskBubble = document.createElement("span");
             taskBubble.classList.add("task-bubble");
             taskBubble.innerHTML = emptyCircle;
-            taskBubble.id = task.id;
+            taskBubble.dataset.id = task.id;
             const svg = taskBubble.querySelector("svg");
             if (task.complete) {
                 taskBubble.classList.add("complete");
@@ -42,7 +42,7 @@ function populateTasks() {
             const taskTrash = document.createElement("span");
             taskTrash.innerHTML = trashIcon;
             taskTrash.classList.add("task-delete");
-            taskTrash.id = task.id;
+            taskTrash.dataset.id = task.id;
 
             taskDiv.classList.add("task");
             taskDiv.append(taskBubble, taskP, taskTrash);

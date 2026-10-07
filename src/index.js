@@ -1,7 +1,7 @@
 import "./styles.css";
 import { populateTasks, removeTask, listTasks, viewTask, taskContainer } from "./taskView.js";
 import { sidebar } from "./sidebar.js";
-
+import { createTask } from "./createTask.js";
 /* THIS MAY BE SCRAP IDK YET
 
 taskContainer.addEventListener("click", (event) => {
@@ -43,16 +43,21 @@ taskContainer.addEventListener("click", (event) => {
 });
 */
 
+const header = document.getElementById("header");
+const modal = document.getElementById("popupModal")
+const closeBtn = document.getElementById("closeBtn");
+
 function switchView(view) {
     switch (view) {
         case "taskList":
             let list = listTasks();
             populateTasks();
+            header.textContent = "Task List";
             taskContainer.addEventListener("click", (event) => {
                 if (event.target.closest(".task-bubble")) {
                     const bubble = event.target.closest(".task-bubble");
                     if (!bubble) return;
-                    const task = list.find(task => task.id === bubble.id);
+                    const task = listTasks().find(task => task.id === bubble.dataset.id);
                     if(task.complete === false) {
                         task.markComplete();
                         event.target.style.fill = "black";
@@ -66,23 +71,50 @@ function switchView(view) {
                     }   
                     localStorage.setItem(task.id, JSON.stringify(task));
                 } else if (event.target.closest(".task-delete")) {
-                    console.log("hit")
                     const trash = event.target.closest(".task-delete");
                     if (!trash) return;
-                    const task = list.find(task => task.id === trash.id);
+                    const task = listTasks().find(task => task.id === trash.dataset.id);               
+                    if (!task) return;
                     removeTask(task.id);
+                } else if (event.target.closest(".task-p")) {
+                    const p = event.target.closest(".task-p");
+                    if (!p) return;
+                    modal.style.display = "block";
+                    const modalDiv = document.getElementById("modal-div");
+                    const modalContent = displayTask(p.dataset.id);
+                    modalDiv.innerHTML = "";
+                    modalDiv.append(modalContent);
+                    window.onclick = (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = "none";
+                        }
+                    };
                 }
             });
             break;
     }
 }
 
+function displayTask(id) {
+    const div = document.createElement("div");
+    const task = viewTask(id);
+    const title = document.createElement("p");
+    title.textContent = task.title;
+    const dueDate = document.createElement("p");
+    dueDate.textContent = task.dueDate;
+    const priority = document.createElement("p");
+    priority.textContent = task.priority;
+    const notes = document.createElement("p");
+    notes.textContent = task.notes;
+    const checklist = document.createElement("p");
+    checklist.textContent = task.checklist;
+
+    div.append(title, dueDate, priority, notes, checklist);
+    return div;
+}
+
 //document.addEventListener("click", )
 
 switchView("taskList");
-console.log(listTasks());
-const id = "198398dd-ac43-425c-a167-69bd0fb54076"
-const tasksList = listTasks();
-const targetTask = tasksList.find(task => task.id === id);
-console.log(targetTask)
+
 export { switchView }

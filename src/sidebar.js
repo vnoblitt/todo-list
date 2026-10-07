@@ -7,6 +7,7 @@ import sproutIcon from "./icons/sprout.svg";
 import trashIcon from "./icons/trash.svg";
 import { createTask } from "./createTask.js";
 import { switchView } from "./index.js";
+import { populateTasks } from "./taskView.js";
 
 const sidebar = document.getElementById("sidebar");
 
@@ -20,7 +21,10 @@ addTaskIcon.addEventListener("click", async () => {
     if(addTaskIcon.active) {
         addTaskIcon.active = false;
         const task = await createTask();
-        localStorage.setItem(`${task.id}`, JSON.stringify(task));
+        if (task) {
+            localStorage.setItem(`${task.id}`, JSON.stringify(task));
+            populateTasks();
+        }
         addTaskIcon.active = true;
     }
 });

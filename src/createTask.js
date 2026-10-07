@@ -1,4 +1,5 @@
 import { Task } from "./Task.js";
+import { populateTasks } from "./taskView.js";
 import circlePlusIcon from "./icons/circle-plus.svg";
 
 //const task = new Task("create index", "code the html for template.html", "10/01/26", "high", "remember SOLID design principles", ["nav", "sidebar", "body"]);
@@ -10,31 +11,27 @@ function createTask() {
      return new Promise((resolve) => {
         const container = document.createElement("div");
         container.classList.add("task-creator");
+        
+        const title = document.createElement("input");
+        title.id = "title";
 
-        const title = document.createElement("span");
-        //const titleLabel = document.createElement("label");
-        //titleLabel.htmlFor = "title";
-        //titleLabel.textContent = "Title: "
-        const titleInput = document.createElement("input");
-        titleInput.id = "title";
-        title.append(titleInput)//titleLabel, titleInput);
+        const dueDate = document.createElement("input");
+        dueDate.type = "date";
+        dueDate.id = "due-date";
+
+        const priority = document.createElement("select");
+        priority.id = "priority";
+        const priorityChoices = [
+            { id: "low", name: "Low" },
+            { id: "medium", name: "Medium" },
+            { id: "high", name: "High" }
+        ];
+            
+        priorityChoices.forEach(choice => {
+            const option = new Option(choice.name, choice.id);
+            priority.add(option);
+        });
 /*
-        const dueDate = document.createElement("div");
-        const dueDateLabel = document.createElement("label");
-        dueDateLabel.htmlFor = "due-date";
-        dueDateLabel.textContent = "Due Date: ";
-        const dueDateInput = document.createElement("input");
-        dueDateInput.id = "due-date";
-        dueDate.append(dueDateLabel, dueDateInput);
-
-        const priority = document.createElement("div");
-        const priorityLabel = document.createElement("label");
-        priorityLabel.htmlFor = "priority";
-        priorityLabel.textContent = "Priority: ";
-        const priorityInput = document.createElement("input");
-        priorityInput.id = "priority";
-        priority.append(priorityLabel, priorityInput);
-
         const notes = document.createElement("div");
         const notesLabel = document.createElement("label");
         notesLabel.htmlFor = "notes";
@@ -57,14 +54,33 @@ function createTask() {
 
         form.append(container);
 
-        container.append(title, submit);//dueDate, priority, notes, checklist, submit);
+        container.append(title, dueDate, priority, submit);//dueDate, priority, notes, checklist, submit);
 
-        titleInput.focus();
+        title.focus();
+
+        const handleEscape = (event) => {
+            if (event.key === "Escape") {
+                container.remove();
+                resolve(null);
+                document.removeEventListener("keydown", handleEscape);
+            }
+        };
+
+        document.addEventListener("keydown", handleEscape);
+
+        title.addEventListener("keydown", (event) => {
+            if(event.key === "Enter") {
+                submit.click();
+            }
+        });
+
         submit.addEventListener("click", () => {
             const task = submitTask(container);
             container.remove();
             resolve(task);
+            
         });
+        
     });
 }
 
@@ -76,8 +92,8 @@ function submitTask(container) {
     const checklist = document.getElementById("checklist");
     
     const taskTitle = title.value;
-    const taskDueDate = ""//dueDate.value;
-    const taskPriority = ""//priority.value;
+    const taskDueDate = dueDate.value;
+    const taskPriority = priority.value;
     const taskNotes = ""//notes.value;
     const taskChecklist = ""//checklist.value;
     const taskComplete = false;
