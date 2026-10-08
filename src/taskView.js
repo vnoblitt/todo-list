@@ -10,14 +10,26 @@ const taskContainer = document.createElement("div");
 taskContainer.id = "task-container";
 content.append(taskContainer);
 
-const initialTask = taskContainer.querySelector(".task");
-if (initialTask) {
-    initialTask.click();
-}
+function populateTasks(range) {
+    let tasksList;
+    const now = new Date();
 
+    switch(range) {
+        case "all":
+            tasksList = listTasks();
+            break;
 
-function populateTasks() {
-    const tasksList = listTasks();
+        case "today":
+            const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+            tasksList = listTasks().filter(task => task.dueDate === todayStr);
+            break;
+        
+        case "upcoming": 
+            const monthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+            tasksList = listTasks().filter(task => task.dueDate.startsWith(monthPrefix));
+            break;
+    }
+    
     for (const task of tasksList) {
         if (document.getElementById(task.id) === null) {
             

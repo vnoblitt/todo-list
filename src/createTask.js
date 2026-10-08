@@ -22,32 +22,16 @@ function createTask() {
         const priority = document.createElement("select");
         priority.id = "priority";
         const priorityChoices = [
-            { id: "low", name: "Low" },
-            { id: "medium", name: "Medium" },
-            { id: "high", name: "High" }
+            { id: "Low", name: "Low" },
+            { id: "Medium", name: "Medium" },
+            { id: "High", name: "High" }
         ];
             
         priorityChoices.forEach(choice => {
             const option = new Option(choice.name, choice.id);
             priority.add(option);
         });
-/*
-        const notes = document.createElement("div");
-        const notesLabel = document.createElement("label");
-        notesLabel.htmlFor = "notes";
-        notesLabel.textContent = "Notes: ";
-        const notesInput = document.createElement("input");
-        notesInput.id = "notes";
-        notes.append(notesLabel, notesInput);
 
-        const checklist = document.createElement("div");
-        const checklistLabel = document.createElement("label");
-        checklistLabel.htmlFor = "checklist";
-        checklistLabel.textContent = "Checklist: ";
-        const checklistInput = document.createElement("input");
-        checklistInput.id = "checklist";
-        checklist.append(checklistLabel, checklistInput);
-*/
         const submit = document.createElement("img");
         submit.src = circlePlusIcon;
         submit.id = "submit-task"
@@ -89,18 +73,18 @@ function submitTask(container) {
     const dueDate = document.getElementById("due-date");
     const priority = document.getElementById("priority");
     const notes = document.getElementById("notes");
-    const checklist = document.getElementById("checklist");
+    const project = document.getElementById("checklist");
     
     const taskTitle = title.value;
     const taskDueDate = dueDate.value;
     const taskPriority = priority.value;
-    const taskNotes = ""//notes.value;
-    const taskChecklist = ""//checklist.value;
+    const taskNotes = "";
+    const taskProject = "None";
     const taskComplete = false;
 
     const uniqueID = crypto.randomUUID();
 
-    const createdTask = new Task(taskTitle, taskDueDate, taskPriority, taskNotes, taskChecklist, uniqueID, taskComplete);
+    const createdTask = new Task(taskTitle, taskDueDate, taskPriority, taskNotes, taskProject, uniqueID, taskComplete);
     return createdTask;
 }
 

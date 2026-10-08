@@ -8,6 +8,7 @@ import trashIcon from "./icons/trash.svg";
 import { createTask } from "./createTask.js";
 import { switchView } from "./index.js";
 import { populateTasks } from "./taskView.js";
+import { currentView } from "./index.js";
 
 const sidebar = document.getElementById("sidebar");
 
@@ -23,7 +24,7 @@ addTaskIcon.addEventListener("click", async () => {
         const task = await createTask();
         if (task) {
             localStorage.setItem(`${task.id}`, JSON.stringify(task));
-            populateTasks();
+            populateTasks(currentView);
         }
         addTaskIcon.active = true;
     }
@@ -54,6 +55,7 @@ todayIcon.classList.add("sidebar-icon");
 todayIcon.src = clockIcon;
 todayIcon.addEventListener("click", () => {
     console.log("today view requested");
+    switchView("today");
 });
 const todayText = document.createElement("div");
 todayText.classList.add("sidebar-text");
@@ -67,6 +69,7 @@ upcomingIcon.classList.add("sidebar-icon");
 upcomingIcon.src = calendarClockIcon;
 upcomingIcon.addEventListener("click", () => {
     console.log("upcoming view requested");
+    switchView("upcoming");
 });
 const upcomingText = document.createElement("div");
 upcomingText.classList.add("sidebar-text");
