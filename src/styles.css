@@ -3,6 +3,7 @@ body {
     display: flex;
     flex-direction: row;
     margin: 0;
+    font-family: "Nunito", sans-serif;
 }
 
 #sidebar {
@@ -15,17 +16,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: lightblue;
 }
 
 #content {
     padding: 0;
     flex: 1;
+    background-color: cornsilk;
 }
 
 .sidebar-element {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.sidebar-element:hover {
+    background-color: cornflowerblue;
+    cursor: pointer;
 }
 
 .sidebar-icon {
@@ -38,29 +46,81 @@ body {
 
 .task {
     display: flex;
-   
+    width: 600px;
     border-radius: 8px;
-    width: 400px;
     height: 30px;
     align-items: center;
     gap: 5px;
     margin-bottom: 10px;
 }
 
-.task-p{
+.Low,
+.Medium,
+.High {
+    margin: 0;
+    width: 80px;
+    margin-left: auto;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.Low {
+    background-color: lightgreen;
+}
+
+.Medium {
+    background-color: rgb(252, 252, 106);
+}
+
+.High {
+    background-color: lightcoral;
+}
+
+.task-p,
+.date-p {
+    margin: 0;
+}
+
+.task-p {
+    align-self: flex-start;
+}
+
+.date-p {
+    margin: 0 0 0 10px;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.task-span{
+    display: flex;
     border: 2px solid black;
     padding: 5px;
     border-radius: 8px;
-    width: 300px;
+    width: 2000px;
     height: 20px;
 }
 
+.complete svg {
+    fill: lightslategray;
+}
+
+.incomplete svg {
+    fill: none;
+}
+
+.task-span:hover {
+    background-color: lightblue;
+}
+
 .task-bubble:hover circle {
-    fill: black;
+    fill: lightslategray;
 } 
 
 .task-delete:hover svg {
-    fill: black;
+    fill: lightslategray;
     cursor: pointer;
 }
 
@@ -120,6 +180,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 #header { 

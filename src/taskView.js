@@ -28,21 +28,41 @@ function populateTasks(range) {
             const monthPrefix = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
             tasksList = listTasks().filter(task => task.dueDate.startsWith(monthPrefix));
             break;
+
+        case "future":
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const nextMonthStart = `${nextMonth.getFullYear()}-${String(nextMonth.getMonth() + 1).padStart(2, "0")}-01`;
+            tasksList = listTasks().filter(task => task.dueDate >= nextMonthStart);
+            break;
     }
-    
+
+    tasksList.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+
     for (const task of tasksList) {
         if (document.getElementById(task.id) === null) {
             
             const taskDiv = document.createElement("div");
             taskDiv.id = task.id;
+            const taskSpan = document.createElement("span");
+            taskSpan.classList.add("task-span");
+            taskSpan.dataset.id = task.id;
             const taskP = document.createElement("p");
             taskP.classList.add("task-p");
             taskP.dataset.id = task.id;
             taskP.textContent = task.title;
+            const priorityP = document.createElement("p");
+            priorityP.classList.add(`${task.priority}`);
+            priorityP.dataset.id = task.id;
+            priorityP.textContent = task.priority;
+            const dateP = document.createElement("p")
+            dateP.classList.add("date-p");
+            dateP.dataset.id = task.id;
+            dateP.textContent = task.dueDate;
             const taskBubble = document.createElement("span");
             taskBubble.classList.add("task-bubble");
             taskBubble.innerHTML = emptyCircle;
             taskBubble.dataset.id = task.id;
+            
             const svg = taskBubble.querySelector("svg");
             if (task.complete) {
                 taskBubble.classList.add("complete");
@@ -57,7 +77,8 @@ function populateTasks(range) {
             taskTrash.dataset.id = task.id;
 
             taskDiv.classList.add("task");
-            taskDiv.append(taskBubble, taskP, taskTrash);
+            taskSpan.append(taskP, priorityP, dateP);
+            taskDiv.append(taskBubble, taskSpan, taskTrash);
             taskContainer.append(taskDiv);
 
             

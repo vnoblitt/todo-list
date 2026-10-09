@@ -57,12 +57,12 @@ taskContainer.addEventListener("click", (event) => {
         const task = listTasks().find(task => task.id === bubble.dataset.id);
         if(task.complete === false) {
             task.markComplete();
-            event.target.style.fill = "black";
+           
             bubble.classList.add("complete")
             bubble.classList.remove("incomplete");
         } else {
             task.markIncomplete();
-            event.target.style.fill = "none";
+        
             bubble.classList.add("incomplete")
             bubble.classList.remove("complete");
         }   
@@ -73,8 +73,8 @@ taskContainer.addEventListener("click", (event) => {
         const task = listTasks().find(task => task.id === trash.dataset.id);               
         if (!task) return;
         removeTask(task.id);
-    } else if (event.target.closest(".task-p")) {
-        const p = event.target.closest(".task-p");
+    } else if (event.target.closest(".task-span")) {
+        const p = event.target.closest(".task-span");
         if (!p) return;
         modal.style.display = "block";
         showModal(p.dataset.id);
@@ -111,6 +111,12 @@ function switchView(view) {
             header.textContent = "Upcoming (Monthly)";
             break;
 
+        case "future":
+            currentView = "future";
+            taskContainer.innerHTML = "";
+            populateTasks("future");
+            header.textContent = "Future (Next Month+)";
+            break;
 
     }
 }

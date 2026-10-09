@@ -17,16 +17,16 @@ addTaskView.classList.add("sidebar-element");
 const addTaskIcon = document.createElement("img");
 addTaskIcon.classList.add("sidebar-icon");
 addTaskIcon.src = circlePlusIcon;
-addTaskIcon.active = true;
-addTaskIcon.addEventListener("click", async () => {
-    if(addTaskIcon.active) {
-        addTaskIcon.active = false;
+addTaskView.active = true;
+addTaskView.addEventListener("click", async () => {
+    if(addTaskView.active) {
+        addTaskView.active = false;
         const task = await createTask();
         if (task) {
             localStorage.setItem(`${task.id}`, JSON.stringify(task));
             populateTasks(currentView);
         }
-        addTaskIcon.active = true;
+        addTaskView.active = true;
     }
 });
 const addTaskText = document.createElement("div");
@@ -39,7 +39,7 @@ taskListView.classList.add("sidebar-element");
 const taskListIcon = document.createElement("img");
 taskListIcon.classList.add("sidebar-icon");
 taskListIcon.src = listIcon;
-taskListIcon.addEventListener("click", () => {
+taskListView.addEventListener("click", () => {
     console.log("task view requested");
     switchView("taskList");
 });
@@ -53,7 +53,7 @@ todayView.classList.add("sidebar-element");
 const todayIcon = document.createElement("img");
 todayIcon.classList.add("sidebar-icon");
 todayIcon.src = clockIcon;
-todayIcon.addEventListener("click", () => {
+todayView.addEventListener("click", () => {
     console.log("today view requested");
     switchView("today");
 });
@@ -67,7 +67,7 @@ upcomingView.classList.add("sidebar-element");
 const upcomingIcon = document.createElement("img");
 upcomingIcon.classList.add("sidebar-icon");
 upcomingIcon.src = calendarClockIcon;
-upcomingIcon.addEventListener("click", () => {
+upcomingView.addEventListener("click", () => {
     console.log("upcoming view requested");
     switchView("upcoming");
 });
@@ -81,8 +81,9 @@ futureView.classList.add("sidebar-element");
 const futureIcon = document.createElement("img");
 futureIcon.classList.add("sidebar-icon");
 futureIcon.src = sproutIcon;
-futureIcon.addEventListener("click", () => {
+futureView.addEventListener("click", () => {
     console.log("future view requested");
+    switchView("future");
 });
 const futureText = document.createElement("div");
 futureText.classList.add("sidebar-text");
